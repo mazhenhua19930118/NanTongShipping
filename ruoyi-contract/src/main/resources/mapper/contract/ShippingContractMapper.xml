@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contract.mapper.ShippingContractMapper">
+    
+    <resultMap type="ShippingContract" id="ShippingContractResult">
+        <result property="id"    column="id"    />
+        <result property="mainContractNo"    column="main_contract_no"    />
+        <result property="mainContractName"    column="main_contract_name"    />
+        <result property="subContractNo"    column="sub_contract_no"    />
+        <result property="subContractName"    column="sub_contract_name"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="mainContractSign"    column="main_contract_sign"    />
+        <result property="subContractSign"    column="sub_contract_sign"    />
+        <result property="customerNo"    column="customer_no"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectShippingContractVo">
+        select id, main_contract_no, main_contract_name, sub_contract_no, sub_contract_name, order_id, main_contract_sign, sub_contract_sign, customer_no, customer_name, create_by, create_time, update_by, update_time from shipping_contract
+    </sql>
+
+    <select id="selectShippingContractList" parameterType="ShippingContract" resultMap="ShippingContractResult">
+        <include refid="selectShippingContractVo"/>
+        <where>  
+            <if test="mainContractNo != null  and mainContractNo != ''"> and main_contract_no = #{mainContractNo}</if>
+            <if test="mainContractName != null  and mainContractName != ''"> and main_contract_name like concat('%', #{mainContractName}, '%')</if>
+            <if test="subContractNo != null  and subContractNo != ''"> and sub_contract_no = #{subContractNo}</if>
+            <if test="subContractName != null  and subContractName != ''"> and sub_contract_name like concat('%', #{subContractName}, '%')</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="mainContractSign != null  and mainContractSign != ''"> and main_contract_sign = #{mainContractSign}</if>
+            <if test="subContractSign != null  and subContractSign != ''"> and sub_contract_sign = #{subContractSign}</if>
+            <if test="customerNo != null  and customerNo != ''"> and customer_no = #{customerNo}</if>
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectShippingContractById" parameterType="Long" resultMap="ShippingContractResult">
+        <include refid="selectShippingContractVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertShippingContract" parameterType="ShippingContract" useGeneratedKeys="true" keyProperty="id">
+        insert into shipping_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mainContractNo != null and mainContractNo != ''">main_contract_no,</if>
+            <if test="mainContractName != null">main_contract_name,</if>
+            <if test="subContractNo != null">sub_contract_no,</if>
+            <if test="subContractName != null">sub_contract_name,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="mainContractSign != null">main_contract_sign,</if>
+            <if test="subContractSign != null">sub_contract_sign,</if>
+            <if test="customerNo != null">customer_no,</if>
+            <if test="customerName != null">customer_name,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mainContractNo != null and mainContractNo != ''">#{mainContractNo},</if>
+            <if test="mainContractName != null">#{mainContractName},</if>
+            <if test="subContractNo != null">#{subContractNo},</if>
+            <if test="subContractName != null">#{subContractName},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="mainContractSign != null">#{mainContractSign},</if>
+            <if test="subContractSign != null">#{subContractSign},</if>
+            <if test="customerNo != null">#{customerNo},</if>
+            <if test="customerName != null">#{customerName},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShippingContract" parameterType="ShippingContract">
+        update shipping_contract
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mainContractNo != null and mainContractNo != ''">main_contract_no = #{mainContractNo},</if>
+            <if test="mainContractName != null">main_contract_name = #{mainContractName},</if>
+            <if test="subContractNo != null">sub_contract_no = #{subContractNo},</if>
+            <if test="subContractName != null">sub_contract_name = #{subContractName},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="mainContractSign != null">main_contract_sign = #{mainContractSign},</if>
+            <if test="subContractSign != null">sub_contract_sign = #{subContractSign},</if>
+            <if test="customerNo != null">customer_no = #{customerNo},</if>
+            <if test="customerName != null">customer_name = #{customerName},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShippingContractById" parameterType="Long">
+        delete from shipping_contract where id = #{id}
+    </delete>
+
+    <delete id="deleteShippingContractByIds" parameterType="String">
+        delete from shipping_contract where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

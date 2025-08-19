@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.goods.mapper.ShippingGoodsMapper">
+    
+    <resultMap type="ShippingGoods" id="ShippingGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="shippingUnit"    column="shipping_unit"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="helenNumber"    column="helen_number"    />
+        <result property="shipNumber"    column="ship_number"    />
+        <result property="transitPort"    column="transit_port"    />
+        <result property="destinationPort"    column="destination_port"    />
+        <result property="weight"    column="weight"    />
+        <result property="weightUnit"    column="weight_unit"    />
+        <result property="status"    column="status"    />
+        <result property="goods"    column="goods"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="publishBy"    column="publish_by"    />
+        <result property="publishTime"    column="publish_time"    />
+    </resultMap>
+
+    <sql id="selectShippingGoodsVo">
+        select id, shipping_unit, order_id, helen_number, ship_number, transit_port, destination_port, weight, weight_unit, status, goods, create_by, create_time, update_by, update_time, publish_by, publish_time from shipping_goods
+    </sql>
+
+    <select id="selectShippingGoodsList" parameterType="ShippingGoods" resultMap="ShippingGoodsResult">
+        <include refid="selectShippingGoodsVo"/>
+        <where>  
+            <if test="shippingUnit != null  and shippingUnit != ''"> and shipping_unit = #{shippingUnit}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="helenNumber != null  and helenNumber != ''"> and helen_number = #{helenNumber}</if>
+            <if test="shipNumber != null  and shipNumber != ''"> and ship_number = #{shipNumber}</if>
+            <if test="transitPort != null  and transitPort != ''"> and transit_port = #{transitPort}</if>
+            <if test="destinationPort != null  and destinationPort != ''"> and destination_port = #{destinationPort}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="weightUnit != null  and weightUnit != ''"> and weight_unit = #{weightUnit}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="goods != null  and goods != ''"> and goods = #{goods}</if>
+            <if test="publishBy != null  and publishBy != ''"> and publish_by = #{publishBy}</if>
+            <if test="publishTime != null "> and publish_time = #{publishTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectShippingGoodsById" parameterType="Long" resultMap="ShippingGoodsResult">
+        <include refid="selectShippingGoodsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertShippingGoods" parameterType="ShippingGoods" useGeneratedKeys="true" keyProperty="id">
+        insert into shipping_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shippingUnit != null">shipping_unit,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="helenNumber != null">helen_number,</if>
+            <if test="shipNumber != null">ship_number,</if>
+            <if test="transitPort != null">transit_port,</if>
+            <if test="destinationPort != null">destination_port,</if>
+            <if test="weight != null">weight,</if>
+            <if test="weightUnit != null">weight_unit,</if>
+            <if test="status != null">status,</if>
+            <if test="goods != null">goods,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="publishBy != null">publish_by,</if>
+            <if test="publishTime != null">publish_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shippingUnit != null">#{shippingUnit},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="helenNumber != null">#{helenNumber},</if>
+            <if test="shipNumber != null">#{shipNumber},</if>
+            <if test="transitPort != null">#{transitPort},</if>
+            <if test="destinationPort != null">#{destinationPort},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="weightUnit != null">#{weightUnit},</if>
+            <if test="status != null">#{status},</if>
+            <if test="goods != null">#{goods},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="publishBy != null">#{publishBy},</if>
+            <if test="publishTime != null">#{publishTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShippingGoods" parameterType="ShippingGoods">
+        update shipping_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shippingUnit != null">shipping_unit = #{shippingUnit},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="helenNumber != null">helen_number = #{helenNumber},</if>
+            <if test="shipNumber != null">ship_number = #{shipNumber},</if>
+            <if test="transitPort != null">transit_port = #{transitPort},</if>
+            <if test="destinationPort != null">destination_port = #{destinationPort},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="weightUnit != null">weight_unit = #{weightUnit},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="goods != null">goods = #{goods},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="publishBy != null">publish_by = #{publishBy},</if>
+            <if test="publishTime != null">publish_time = #{publishTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShippingGoodsById" parameterType="Long">
+        delete from shipping_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteShippingGoodsByIds" parameterType="String">
+        delete from shipping_goods where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

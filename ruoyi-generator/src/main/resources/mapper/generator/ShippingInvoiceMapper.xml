@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.generator.mapper.ShippingInvoiceMapper">
+
+    <resultMap type="ShippingInvoice" id="ShippingInvoiceResult">
+        <id property="id" column="id"/>
+        <result property="invoiceNo" column="invoice_no"/>
+        <result property="invoiceType" column="invoice_type"/>
+        <result property="invoiceTime" column="invoice_time"/>
+    </resultMap>
+
+
+    <select id="selectInvoice" parameterType="ShippingInvoice" resultMap="ShippingInvoiceResult">
+        select * from shipping_invoice where
+        <if test="invoiceNo != null and invoiceNo != ''">
+            invoice_no = #{invoiceNo}
+        </if>
+        <if test="invoiceType != null and invoiceType != ''">
+            invoice_type = #{invoiceType}
+        </if>
+    </select>
+
+    <update id="updateInvoice">
+        update shipping_invoice
+        <set>
+            invoice_no = 1,
+            invoice_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateInvoiceNo">
+        update shipping_invoice
+        <set>
+			invoice_no = invoice_no + 1,
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
