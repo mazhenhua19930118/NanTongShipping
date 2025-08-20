@@ -69,6 +69,18 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-goods</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-task</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-upload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-insurance</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

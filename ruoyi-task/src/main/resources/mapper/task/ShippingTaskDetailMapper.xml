@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.task.mapper.ShippingTaskDetailMapper">
+    
+    <resultMap type="ShippingTaskDetail" id="ShippingTaskDetailResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="director"    column="director"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectShippingTaskDetailVo">
+        select id, order_id, task_status, director,task_id, create_time, update_time,creator from shipping_task_detail
+    </sql>
+
+    <select id="selectShippingTaskDetailList" parameterType="ShippingTaskDetail" resultMap="ShippingTaskDetailResult">
+        <include refid="selectShippingTaskDetailVo"/>
+        <where>
+            <if test="goodsId != null "> and order_id = #{orderId}</if>
+            <if test="taskStatus != null  and taskStatus != ''"> and task_status = #{taskStatus}</if>
+            <if test="director != null "> and director = #{director}</if>
+            <if test="creator != null "> and creator = #{creator}</if>
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+        </where>
+    </select>
+    
+    <select id="selectShippingTaskDetailById" parameterType="Long" resultMap="ShippingTaskDetailResult">
+        <include refid="selectShippingTaskDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectShippingTaskDetailByTaskId" parameterType="Long" resultMap="ShippingTaskDetailResult">
+        <include refid="selectShippingTaskDetailVo"/>
+        where task_id = #{taskId}
+    </select>
+
+    <select id="selectShippingTaskDetailByRelatedId" parameterType="String" resultMap="ShippingTaskDetailResult">
+        <include refid="selectShippingTaskDetailVo"/>
+        where order_id = #{orderId}
+    </select>
+
+    <insert id="insertShippingTaskDetail" parameterType="ShippingTaskDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into shipping_task_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">orderId,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="director != null">director,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="creator != null">creator,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">#{orderId},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="director != null">#{director},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="creator != null">#{creator},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShippingTaskDetail" parameterType="ShippingTaskDetail">
+        update shipping_task_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null">order_id = #{orderId},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="director != null">director = #{director},</if>
+            <if test="taskId != null">task_id= #{taskId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="creator != null">creator = #{creator},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    
+
+    <delete id="deleteShippingTaskDetailById" parameterType="Long">
+        delete from shipping_task_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteShippingTaskDetailByGoodsId" parameterType="String">
+        delete from shipping_task_detail where order_id =  #{orderId}
+    </delete>
+
+    <delete id="deleteShippingTaskDetailByIds" parameterType="String">
+        delete from shipping_task_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -3,6 +3,7 @@ package com.ruoyi.common.core.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,6 +42,40 @@ public class BaseEntity implements Serializable
     /** 请求参数 */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Map<String, Object> params;
+
+    /** 任务状态List */
+    private List<String> taskStatusList;
+
+    /** 任务状态 */
+    private String taskStatus;
+
+    /** 当前操作人Id */
+    private Long currentUserId;
+
+
+    public List<String> getTaskStatusList() {
+        return taskStatusList;
+    }
+
+    public void setTaskStatusList(List<String> taskStatusList) {
+        this.taskStatusList = taskStatusList;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Long getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(Long currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
     public String getSearchValue()
     {

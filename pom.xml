@@ -227,6 +227,21 @@
                 <artifactId>ruoyi-goods</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-task</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-upload</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-insurance</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -239,6 +254,9 @@
         <module>ruoyi-common</module>
         <module>ruoyi-contract</module>
         <module>ruoyi-goods</module>
+        <module>ruoyi-task</module>
+        <module>ruoyi-upload</module>
+        <module>ruoyi-insurance</module>
     </modules>
     <packaging>pom</packaging>
 

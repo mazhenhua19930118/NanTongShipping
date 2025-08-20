@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.task.mapper.ShippingTaskMapper">
+    
+    <resultMap type="ShippingTask" id="ShippingTaskResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="assignUserId"    column="assign_user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.common.vo.GoodsDetailVo" id="GoodsDetailVoResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="shippingUnit"    column="shipping_unit"    />
+        <result property="helenNumber"    column="helen_number"    />
+        <result property="shipNumber"    column="ship_number"    />
+        <result property="transitPort"    column="transit_port"    />
+        <result property="destinationPort"    column="destination_port"    />
+        <result property="weight"    column="weight"    />
+        <result property="weightUnit"    column="weight_unit"    />
+        <result property="goods"    column="goods"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="publishBy"    column="publish_by"    />
+        <result property="publishTime"    column="publish_time"    />
+        <result property="mainContractNo"    column="main_contract_no"    />
+        <result property="mainContractName"    column="main_contract_name"    />
+        <result property="subContractNo"    column="sub_contract_no"    />
+        <result property="subContractName"    column="sub_contract_name"    />
+        <result property="mainContractSign"    column="main_contract_sign"    />
+        <result property="subContractSign"    column="sub_contract_sign"    />
+        <result property="customerNo"    column="customer_no"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="insuranceStatus"    column="insurance_status"    />
+        <result property="isAdvancePayment"    column="is_advance_payment"    />
+        <result property="subOrderPrice"    column="sub_order_price"    />
+        <result property="mainOrderPrice"    column="main_order_price"    />
+        <result property="aboveLimitWeight"    column="above_limit_weight"    />
+        <result property="aboveLimitWeightUnit"    column="above_limit_weight_unit"    />
+        <result property="goodsPrice"    column="goods_price"    />
+        <result property="paymentAmount"    column="payment_amount"    />
+        <result property="settlementAmount"    column="settlement_amount"    />
+        <result property="deferredPayment"    column="deferred_payment"    />
+        <result property="deferredSettlement"    column="deferred_settlement"    />
+        <result property="isUpLoadDetailsManagement"    column="is_upload_details_management"    />
+        <result property="taskStatus"    column="task_status"    />
+    </resultMap>
+
+    <sql id="selectShippingTaskVo">
+        select id, order_id, task_status, assign_user_id, create_by, create_time, update_by, update_time from shipping_task
+    </sql>
+
+    <select id="selectShippingTaskList" parameterType="ShippingTask" resultMap="ShippingTaskResult">
+        <include refid="selectShippingTaskVo"/>
+        <where>
+            <if test="goodsId != null "> and order_id = #{orderId}</if>
+            <if test="taskStatus != null  and taskStatus != ''"> and task_status = #{taskStatus}</if>
+            <if test="assignUserId != null "> and assign_user_id = #{assignUserId}</if>
+        </where>
+    </select>
+    
+    <select id="selectShippingTaskById" parameterType="Long" resultMap="ShippingTaskResult">
+        <include refid="selectShippingTaskVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectShippingTaskByRelatedId" parameterType="Long" resultMap="ShippingTaskResult">
+        <include refid="selectShippingTaskVo"/>
+        where order_id = #{orderId}
+    </select>
+
+    <insert id="insertShippingTask" parameterType="ShippingTask" useGeneratedKeys="true" keyProperty="id">
+        insert into shipping_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">orderId,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="assignUserId != null">assign_user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">#{orderId},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+            <if test="assignUserId != null">#{assignUserId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShippingTask" parameterType="ShippingTask">
+        update shipping_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="order_id != null">order_id = #{orderId},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="assignUserId != null">assign_user_id = #{assignUserId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time =  sysdate(),
+        </trim>
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateShippingTaskByGoodsId" parameterType="ShippingTask">
+        update shipping_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="assignUserId != null">assign_user_id = #{assignUserId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where order_id =  #{orderId}
+    </update>
+
+    <update id="updateShippingGoodsTask" parameterType="ShippingTask">
+        update shipping_goods set status  = #{taskStatus}
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteShippingTaskById" parameterType="Long">
+        delete from shipping_task where id = #{id}
+    </delete>
+
+    <delete id="deleteShippingTaskByGoodsId" parameterType="String">
+        delete from shipping_task   where order_id =  #{orderId}
+    </delete>
+
+    <delete id="deleteShippingTaskByIds" parameterType="String">
+        delete from shipping_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectShippingContractCount" parameterType="String" resultType="Integer">
+       select count(*) from shipping_contract
+        where order_id = #{orderId}
+    </select>
+
+    <insert id="insertShippingContract" parameterType="com.ruoyi.common.dto.ShippingContractDto" useGeneratedKeys="true" keyProperty="id">
+        insert into shipping_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mainContractNo != null and mainContractNo != ''">main_contract_no,</if>
+            <if test="mainContractName != null">main_contract_name,</if>
+            <if test="subContractNo != null">sub_contract_no,</if>
+            <if test="subContractName != null">sub_contract_name,</if>
+            <if test="order_id != null">orderId,</if>
+            <if test="mainContractSign != null">main_contract_sign,</if>
+            <if test="subContractSign != null">sub_contract_sign,</if>
+            <if test="customerNo != null">customer_no,</if>
+            <if test="customerName != null">customer_name,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mainContractNo != null and mainContractNo != ''">#{mainContractNo},</if>
+            <if test="mainContractName != null">#{mainContractName},</if>
+            <if test="subContractNo != null">#{subContractNo},</if>
+            <if test="subContractName != null">#{subContractName},</if>
+            <if test="order_id != null">#{orderId},</if>
+            <if test="mainContractSign != null">#{mainContractSign},</if>
+            <if test="subContractSign != null">#{subContractSign},</if>
+            <if test="customerNo != null">#{customerNo},</if>
+            <if test="customerName != null">#{customerName},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+
+    <select id="selectGoodsDetailByGoodsId" parameterType="String" resultMap="GoodsDetailVoResult">
+        select
+        g.shipping_unit,g.helen_number,g.ship_number,g.transit_port,g.destination_port,g.weight,g.weight_unit,g.goods,g.status,g.publish_by,g.publish_time,
+        c.main_contract_no,c.main_contract_name,c.sub_contract_no,c.sub_contract_name,c.customer_no,c.customer_name,c.main_contract_sign,c.sub_contract_sign,
+        i.insurance_status,
+        f.is_advance_payment,f.sub_order_price,f.main_order_price,f.above_limit_weight,f.above_limit_weight_unit,f.goods_price,f.payment_amount,f.settlement_amount,f.deferred_payment,f.deferred_settlement,
+        f.is_upload_details_management,
+        t.task_status,t.order_id
+        from shipping_goods g inner join shipping_task t on g.order_id = t.order_id
+        left join shipping_contract c on g.order_id = c.order_id
+        left join shipping_finance f on g.order_id = f.order_id
+        left join shipping_insurance i on g.order_id = i.order_id
+        where
+        g.order_id = #{orderId}
+    </select>
+</mapper>
